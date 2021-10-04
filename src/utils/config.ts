@@ -9,8 +9,8 @@ const bones = { HEAD: 8, NECK: 7, CHESTPLACE: 6 };
 
 export const AIMBOT_AIM_AT = bones.HEAD;
 
-export const FOV = 12;
-export const AIM_SMOOTH = 77;
+export const AIMBOT_FOV = 12;
+export const AIMBOT_AIM_SMOOTH = 77;
 
 export const configs = {
     aimbot: config(true, "VK_XBUTTON1"),

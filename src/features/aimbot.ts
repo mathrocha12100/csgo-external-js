@@ -4,7 +4,7 @@ import { calcVector3WithOtherVector3 } from '../functions/vector';
 import { IModule } from '../interfaces/MemoryJS';
 import { vec3 } from '../interfaces/Vector';
 import { NETVARS, SIGNATURES } from '../utils/offsets';
-import { AIMBOT_AIM_AT, AIM_SMOOTH, FOV } from '../utils/config';
+import { AIMBOT_AIM_AT, AIMBOT_AIM_SMOOTH, AIMBOT_FOV } from '../utils/config';
 
 function distance(x1: number, y1: number, x2: number, y2: number) {
     // Calculating distance
@@ -13,7 +13,7 @@ function distance(x1: number, y1: number, x2: number, y2: number) {
 
 function getSmoothedValue(target: number, origin: number) {
     const differenceBetween2 = target - origin;
-    const SumDifferenceWithMyOrigin = origin + differenceBetween2 / AIM_SMOOTH;
+    const SumDifferenceWithMyOrigin = origin + differenceBetween2 / AIMBOT_AIM_SMOOTH;
 
     return SumDifferenceWithMyOrigin;
 }
@@ -41,7 +41,7 @@ function AimbotAt(engine: IModule, target: vec3) {
 
     const crosshairDistance = distance(viewAngles.x, viewAngles.y, pitch, yaw);
 
-    if (crosshairDistance > FOV) return;
+    if (crosshairDistance > AIMBOT_FOV) return;
 
     if (smoothedPitch >= -89 && smoothedPitch <= 89 && smoothedYaw >= -180 && smoothedYaw <= 180) {
         WriteMemory(dwClientStatePointer + SIGNATURES.dwClientState_ViewAngles, { x: smoothedPitch, y: smoothedYaw, z: viewAngles.z }, "vec3");
