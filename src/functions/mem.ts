@@ -11,7 +11,7 @@ export function getMem() {
     return { process, clientModule, engineModule };
 }
 
-const { process, clientModule, engineModule } = getMem();
+const { process } = getMem();
 
 export function WriteMemory(adress: number, value: any, type: MemoryTypes) {
     writeMemory(process.handle, adress, value, type);

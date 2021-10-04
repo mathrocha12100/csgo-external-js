@@ -1,22 +1,31 @@
 import { IModule } from '../interfaces/MemoryJS';
 import { NETVARS, SIGNATURES } from '../utils/offsets';
-import { getEntityByIndex, getEntityHealth, getLocalPlayer } from '../functions/player';
+import { getEntityByIndex, getEntityHealth, getLocalPlayer, getPlayerColor, isEnemy } from '../functions/player';
 import { WriteMemory, ReadMemory } from '../functions/mem';
 
-const color = [0.7, 0.0, 0.7, 0.6];
+import { HexColor } from '../functions/color';
 
-function drawGlow(glowManager: any, entityGlow: any) {
+const ally = HexColor('#08ff08');
+const enemy = HexColor('#de0429');
+
+const allySpotted = HexColor('#08ff08');
+const enemySpotted = HexColor('#fa3759');
+
+function drawGlow(glowManager: any, entityGlow: any, entity: number) {
     if (!glowManager || !entityGlow) return;
 
-    WriteMemory(glowManager + entityGlow * 0x38 + 0x8, color[0], "float");
-    WriteMemory(glowManager + entityGlow * 0x38 + 0xC, color[1], "float");
-    WriteMemory(glowManager + entityGlow * 0x38 + 0x10, color[2], "float");
-    WriteMemory(glowManager + entityGlow * 0x38 + 0x14, color[3], "float");
+    const color = isEnemy(entity) ? getPlayerColor(entity, enemy, enemySpotted) : getPlayerColor(entity, ally, allySpotted);
+
+    WriteMemory(glowManager + entityGlow * 0x38 + 0x8, color.red, "float") //RED
+    WriteMemory(glowManager + entityGlow * 0x38 + 0xC, color.green, "float");//GREEN
+    WriteMemory(glowManager + entityGlow * 0x38 + 0x10, color.blue, "float");//BLUE
+
+    WriteMemory(glowManager + entityGlow * 0x38 + 0x14, color.addressable, "float"); //ADRESSABLE
+
     WriteMemory(glowManager + entityGlow * 0x38 + 0x28, 1, "int");
 }
 
 export default function Glow(client: IModule) {
-
     try {
         const localPlayer = getLocalPlayer();
         
@@ -31,7 +40,7 @@ export default function Glow(client: IModule) {
             if (entity && getEntityHealth(entity)) {
                 const entityGlow = ReadMemory(entity + NETVARS.m_iGlowIndex, "int");
 
-                drawGlow(glowManager, entityGlow);
+                drawGlow(glowManager, entityGlow, entity);
             }
         }
     } catch (err) {

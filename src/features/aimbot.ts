@@ -1,26 +1,24 @@
 import { ReadMemory, WriteMemory } from '../functions/mem';
-import { getLocalPlayer, getClosestPlayer, getBonePos } from '../functions/player';
+import { getLocalPlayer, getClosestPlayer, getBonePos, playerIsSpotted } from '../functions/player';
 import { calcVector3WithOtherVector3 } from '../functions/vector';
 import { IModule } from '../interfaces/MemoryJS';
 import { vec3 } from '../interfaces/Vector';
 import { NETVARS, SIGNATURES } from '../utils/offsets';
-
-const fov = 12;
-const aimSmooth = 77;
+import { AIMBOT_AIM_AT, AIM_SMOOTH, FOV } from '../utils/config';
 
 function distance(x1: number, y1: number, x2: number, y2: number) {
-	// Calculating distance
-	return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) * 1.0);
+    // Calculating distance
+    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) * 1.0);
 }
 
 function getSmoothedValue(target: number, origin: number) {
-	const differenceBetween2 = target - origin;
-	const SumDifferenceWithMyOrigin =  origin + differenceBetween2 / aimSmooth;
-	
-	return SumDifferenceWithMyOrigin;
+    const differenceBetween2 = target - origin;
+    const SumDifferenceWithMyOrigin = origin + differenceBetween2 / AIM_SMOOTH;
+
+    return SumDifferenceWithMyOrigin;
 }
 
-function AimbotAt(engine:IModule, target: vec3) {
+function AimbotAt(engine: IModule, target: vec3) {
     const localPlayer = getLocalPlayer();
 
     const dwClientStatePointer = ReadMemory(engine.modBaseAddr + SIGNATURES.dwClientState, "uint32");
@@ -36,27 +34,35 @@ function AimbotAt(engine:IModule, target: vec3) {
     const deltaVecLength = Math.sqrt(deltaVec.x * deltaVec.x + deltaVec.y * deltaVec.y + deltaVec.z * deltaVec.z);
 
     const pitch = -Math.asin(deltaVec.z / deltaVecLength) * (180 / Math.PI);
-	const yaw = Math.atan2(deltaVec.y, deltaVec.x) * (180 / Math.PI);
+    const yaw = Math.atan2(deltaVec.y, deltaVec.x) * (180 / Math.PI);
 
     const smoothedPitch = getSmoothedValue(pitch, viewAngles.x);
-	const smoothedYaw = getSmoothedValue(yaw, viewAngles.y);
+    const smoothedYaw = getSmoothedValue(yaw, viewAngles.y);
 
-	const crosshairDistance = distance(viewAngles.x, viewAngles.y, pitch, yaw);
+    const crosshairDistance = distance(viewAngles.x, viewAngles.y, pitch, yaw);
 
-    if (crosshairDistance > fov) return;
+    if (crosshairDistance > FOV) return;
 
     if (smoothedPitch >= -89 && smoothedPitch <= 89 && smoothedYaw >= -180 && smoothedYaw <= 180) {
         WriteMemory(dwClientStatePointer + SIGNATURES.dwClientState_ViewAngles, { x: smoothedPitch, y: smoothedYaw, z: viewAngles.z }, "vec3");
     }
 }
 
-export default function Aimbot(engine:IModule) {
-    
-    const closestEnemy = getClosestPlayer();
-    
-    if (closestEnemy) {
-        const headPos = getBonePos(closestEnemy, 8);
+export default function Aimbot(engine: IModule) {
+    try {
 
-        AimbotAt(engine, headPos)
+        const localPlayer = getLocalPlayer();
+
+        if (!localPlayer) return;
+
+        const closestEnemy = getClosestPlayer();
+
+        if (closestEnemy && playerIsSpotted(closestEnemy)) {
+            const headPos = getBonePos(closestEnemy, AIMBOT_AIM_AT);
+
+            AimbotAt(engine, headPos);
+        }
+    } catch (err) {
+        console.error('Aimbot Error');
     }
 }

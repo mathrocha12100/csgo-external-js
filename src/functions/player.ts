@@ -1,4 +1,5 @@
 import { readMemory } from 'memoryjs';
+import { ARGB } from '../interfaces/Color';
 import { vec3 } from '../interfaces/Vector';
 import { SIGNATURES, NETVARS } from '../utils/offsets';
 import { getMem, ReadMemory } from './mem';
@@ -26,7 +27,7 @@ export function getMaxEntity() {
 
 export function isEnemy(entity: number) {
     const localEntity = getLocalPlayer();
-    
+
     const localEntityTeamId = readMemory(process.handle, localEntity + NETVARS.m_iTeamNum, "int");
     const entityTeamId = readMemory(process.handle, entity + NETVARS.m_iTeamNum, "int");
 
@@ -60,7 +61,7 @@ export function getClosestPlayer() {
     const localEntity = getLocalPlayer();
 
     let closestDistance = 1000000;
-	let closestDistanceIndex = -1;
+    let closestDistanceIndex = -1;
 
     for (let i = 0; i < 64; i++) {
         let currentEntity = getEntityByIndex(i);
@@ -72,12 +73,26 @@ export function getClosestPlayer() {
         const currentDistance = getDistance(localEntity, currentEntityVecOrigin);
 
         if (currentDistance < closestDistance) {
-			closestDistance = currentDistance;
-			closestDistanceIndex = i;
-		}
+            closestDistance = currentDistance;
+            closestDistanceIndex = i;
+        }
     }
 
     if (closestDistanceIndex == -1) return null;
 
     return getEntityByIndex(closestDistanceIndex);
+}
+
+export function playerIsSpotted(entity: number) {
+    const isSpotted = readMemory(process.handle, entity + NETVARS.m_bSpottedByMask, "int");
+
+    return isSpotted != 0;
+}
+
+export function getPlayerColor(entity: number, color: ARGB, spottedColor: ARGB) {
+    const isSpotted = playerIsSpotted(entity);
+
+    if (isSpotted) return spottedColor;
+
+    return color;
 }
