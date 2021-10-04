@@ -6,6 +6,7 @@ function config(enabled: boolean, key?: keyof typeof keys) {
 }
 
 export const configs = {
+    aimbot: config(true, "VK_XBUTTON1"),
     bunnyhop: config(true, "VK_SPACE"),
     triggerbot: config(true, "VK_XBUTTON2"),
     glow: config(true),
@@ -19,6 +20,6 @@ export function canRun(config: keyof typeof configs) {
     if (conf.key) {
         return aks.getAsyncKeyState(conf.key) && conf.enabled;
     }
-    
+
     return conf.enabled;
 }
