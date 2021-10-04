@@ -5,7 +5,7 @@ export interface RGB {
 }
 
 export interface ARGB {
-    addressable: number;
+    alpha: number;
     red: number;
     green: number;
     blue: number;

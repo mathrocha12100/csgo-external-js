@@ -15,14 +15,14 @@ export function convertHexToRGB(hexadecimal: Hex): RGB {
     return { red, green, blue };
 }
 
-export function convertRGBToFloat(rgb: RGB): ARGB {
-    return { red: rgb.red / 255.0, green: rgb.green / 255, blue: rgb.blue / 255, addressable: 1 };
+export function convertRGBToFloat(rgb: RGB, alpha?: number): ARGB {
+    return { red: rgb.red / 255.0, green: rgb.green / 255, blue: rgb.blue / 255, alpha: alpha || 1 };
 }
 
-export function HexColor(hexadecimal: Hex) {
+export function HexColor(hexadecimal: Hex, alpha?: number) {
     const rgbColor = convertHexToRGB(hexadecimal);
 
-    return convertRGBToFloat(rgbColor);
+    return convertRGBToFloat(rgbColor, alpha);
 }
 
 export function RGBColor(rgb: RGB) {
