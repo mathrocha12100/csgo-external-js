@@ -1,11 +1,31 @@
-# CSGO External JS
-
-External Javascript Cheat
-
-## Features
+# CSGO.js
 
 [x] Glow
 [x] Triggerbot
+[x] BunnyHop
 [x] RCS
 [x] Radar
-[] Aimbot
+[x] Aimbot
+
+## Resume
+
+Basic external csgo cheat made in typescript
+
+## Run Project
+
+`npm install` or `yarn install` to install dependencies
+
+`yarn dev` or `npm run dev` to run
+
+i used memoryjs to make the memory manipulation, so if you are having problems to run the project, try to install and config 
+`nw-gyp`
+
+##### References
+
+`memoryjs` - https://github.com/Rob--/memoryjs
+`nw-gyp` - https://github.com/nwjs/nw-gyp
+`issue of nw-gyp` - https://github.com/Rob--/memoryjs/issues/23
+
+## config
+
+`src/utils/config.ts` - config file
