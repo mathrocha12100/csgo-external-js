@@ -1,7 +1,7 @@
 import { ReadMemory, WriteMemory } from '../functions/mem';
 import { isEnemy, getLocalPlayer, getEntityByIndex } from '../functions/player';
 import { IModule } from '../interfaces/MemoryJS';
-import { NETVARS, SIGNATURES } from '../offsets/offsets';
+import { NETVARS, SIGNATURES } from '../utils/offsets';
 
 export default function Triggerbot(client: IModule) {
     try {

@@ -1,5 +1,5 @@
 import { IModule } from '../interfaces/MemoryJS';
-import { NETVARS, SIGNATURES } from '../offsets/offsets';
+import { NETVARS, SIGNATURES } from '../utils/offsets';
 import { getEntityByIndex, getEntityHealth, getLocalPlayer } from '../functions/player';
 import { WriteMemory, ReadMemory } from '../functions/mem';
 

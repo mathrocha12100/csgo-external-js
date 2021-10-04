@@ -1,4 +1,4 @@
-import { NETVARS } from '../offsets/offsets';
+import { NETVARS } from '../utils/offsets';
 import { IModule } from '../interfaces/MemoryJS';
 import { WriteMemory } from '../functions/mem';
 import { getLocalPlayer, getEntityByIndex, getEntityHealth } from '../functions/player';

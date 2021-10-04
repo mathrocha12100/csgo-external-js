@@ -1,6 +1,6 @@
 import { openProcess, findModule, writeMemory, readMemory } from 'memoryjs';
 import { IModule, IOpenProcess, MemoryTypes } from '../interfaces/MemoryJS';
-import { MODULES } from '../offsets/offsets';
+import { MODULES } from '../utils/offsets';
 
 export function getMem() {
     const process: IOpenProcess = openProcess(MODULES.game);

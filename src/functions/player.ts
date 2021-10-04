@@ -1,5 +1,5 @@
 import { readBuffer, readMemory } from 'memoryjs';
-import { SIGNATURES, NETVARS } from '../offsets/offsets';
+import { SIGNATURES, NETVARS } from '../utils/offsets';
 import { getMem } from './mem';
 
 const { process, clientModule } = getMem();

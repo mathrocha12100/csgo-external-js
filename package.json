@@ -9,9 +9,14 @@
   "author": "Matheus Rocha",
   "license": "ISC",
   "dependencies": {
-    "memoryjs": "^3.4.0"
+    "asynckeystate": "^0.0.5",
+    "iohook": "^0.6.6",
+    "keypress": "^0.2.1",
+    "memoryjs": "^3.4.0",
+    "os": "^0.1.2"
   },
   "devDependencies": {
+    "@types/node": "^16.10.2",
     "nodemon": "^2.0.13",
     "sucrase": "^3.20.1",
     "ts-node": "^10.2.1",

@@ -1,6 +1,6 @@
 import { getLocalPlayer } from '../functions/player';
 import { ReadMemory, WriteMemory } from '../functions/mem';
-import { SIGNATURES, NETVARS } from '../offsets/offsets';
+import { SIGNATURES, NETVARS } from '../utils/offsets';
 import { vec3 } from '../interfaces/Vector';
 import { Vector3, calcVector3WithOtherVector3, NormalizeVector3, calcVector3WithOtherValue } from '../functions/vector';
 import { IModule } from '../interfaces/MemoryJS';
