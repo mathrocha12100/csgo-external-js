@@ -5,7 +5,7 @@ import { SIGNATURES, NETVARS } from '../utils/offsets';
 import { getMem, ReadMemory } from './mem';
 import { calcVector3WithOtherVector3, Vector3 } from './vector';
 
-const { process, clientModule } = getMem();
+const { process, clientModule, engineModule } = getMem();
 
 const playerOffset = 0x10;
 
@@ -22,7 +22,9 @@ export function getEntityHealth(entity: number): number {
 }
 
 export function getMaxEntity() {
-    return readMemory(process.handle, 0x0, "int");
+    const moduleBase = ReadMemory(engineModule.modBaseAddr + SIGNATURES.dwClientState, "uint32");
+
+    return ReadMemory( moduleBase + SIGNATURES.dwClientState_MaxPlayer, "int");
 }
 
 export function isEnemy(entity: number) {
@@ -63,7 +65,7 @@ export function getClosestPlayer() {
     let closestDistance = 1000000;
     let closestDistanceIndex = -1;
 
-    for (let i = 0; i < 64; i++) {
+    for (let i = 0; i < getMaxEntity(); i++) {
         let currentEntity = getEntityByIndex(i);
 
         if (!currentEntity || !getEntityHealth(currentEntity) || !isEnemy(currentEntity)) continue;

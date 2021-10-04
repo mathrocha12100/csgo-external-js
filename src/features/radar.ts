@@ -1,7 +1,7 @@
 import { NETVARS } from '../utils/offsets';
 import { IModule } from '../interfaces/MemoryJS';
 import { WriteMemory } from '../functions/mem';
-import { getLocalPlayer, getEntityByIndex, getEntityHealth } from '../functions/player';
+import { getLocalPlayer, getEntityByIndex, getEntityHealth, getMaxEntity } from '../functions/player';
 
 export default function Radar() {
     try {
@@ -9,7 +9,7 @@ export default function Radar() {
         
         if (!localPlayer) return;
 
-        for (let i = 1; i < 32; i++) {
+        for (let i = 1; i < getMaxEntity(); i++) {
             const entity = getEntityByIndex(i);
 
             if (entity && getEntityHealth(entity)) {

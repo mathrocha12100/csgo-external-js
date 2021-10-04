@@ -1,6 +1,6 @@
 import { IModule } from '../interfaces/MemoryJS';
 import { NETVARS, SIGNATURES } from '../utils/offsets';
-import { getEntityByIndex, getEntityHealth, getLocalPlayer, getPlayerColor, isEnemy } from '../functions/player';
+import { getEntityByIndex, getEntityHealth, getLocalPlayer, getMaxEntity, getPlayerColor, isEnemy } from '../functions/player';
 import { WriteMemory, ReadMemory } from '../functions/mem';
 
 import { HexColor } from '../functions/color';
@@ -34,7 +34,7 @@ export default function Glow(client: IModule) {
         const glowManager = ReadMemory(client.modBaseAddr + SIGNATURES.dwGlowObjectManager, "int");
 
 
-        for (let i = 1; i < 64; i++) {
+        for (let i = 1; i < getMaxEntity(); i++) {
             const entity = getEntityByIndex(i);
 
             if (entity && getEntityHealth(entity)) {

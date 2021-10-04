@@ -5,8 +5,11 @@ import Triggerbot from './features/triggerbot';
 import BunnyHop from './features/bunnyhop';
 import Aimbot from './features/aimbot';
 
-import { getMem } from './functions/mem';
+import aks from 'asynckeystate';
 
+import { keys } from './utils/keys';
+
+import { getMem } from './functions/mem';
 import { canRun } from './utils/config';
 
 function execute() {
@@ -21,7 +24,11 @@ function execute() {
         if (canRun('bunnyhop')) BunnyHop(clientModule);
         if (canRun('radar'))  Radar();
         if (canRun('rcs')) RCS(engineModule);
+
+        if (aks.getAsyncKeyState(keys.VK_END)) stop = true;
     }
+
+    process.exit(1);
 }
 
 execute();
