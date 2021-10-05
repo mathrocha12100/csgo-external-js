@@ -22,7 +22,7 @@ export default function RCS(engine: IModule) {
         const punchAngleVal: vec3 = ReadMemory(entity + NETVARS.m_aimPunchAngle, "vec3");
         const punchAngleVec: vec3 = calcVector3WithOtherValue(punchAngleVal, 2, '*');
 
-        if (shotsFired > 0) {
+        if (shotsFired > 1) {
             let newAngle: vec3 = calcVector3WithOtherVector3(calcVector3WithOtherVector3(viewAngles, oPunch, '+'), punchAngleVec, '-');
 
             NormalizeVector3(newAngle);
