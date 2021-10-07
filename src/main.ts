@@ -28,7 +28,7 @@ function execute() {
         if (aks.getAsyncKeyState(keys.VK_END)) stop = true;
     }
 
-    process.exit(1);
+    // process.exit(1);
 }
 
 execute();
