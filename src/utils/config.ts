@@ -12,12 +12,12 @@ export const AIMBOT_FOV = 12;
 export const AIMBOT_AIM_SMOOTH = 77;
 
 export const configs = {
-    aimbot: config(true, "VK_XBUTTON2"),
-    bunnyhop: config(true, "VK_SPACE"),
+    aimbot: config(false, "VK_XBUTTON2"),
+    bunnyhop: config(false, "VK_SPACE"),
     triggerbot: config(true, "VK_XBUTTON2"),
     glow: config(true),
-    radar: config(true),
-    rcs: config(true),
+    radar: config(false),
+    rcs: config(false),
 };
 
 export function canRun(config: keyof typeof configs) {
