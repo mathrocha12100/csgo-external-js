@@ -4,19 +4,16 @@ import RCS from './features/rcs';
 import Triggerbot from './features/triggerbot';
 import BunnyHop from './features/bunnyhop';
 import Aimbot from './features/aimbot';
-
 import aks from 'asynckeystate';
-
 import { keys } from './utils/keys';
-
 import { getMem } from './functions/mem';
 import { canRun } from './utils/config';
 
-function execute() {
-    const { clientModule, engineModule } = getMem();
+(async function () {
+ 
+    let { clientModule, engineModule } = getMem();
 
     let stop = false;
-
     while (!stop) {
         if (canRun('aimbot')) Aimbot(engineModule);
         if (canRun('glow')) Glow(clientModule);
@@ -28,7 +25,6 @@ function execute() {
         if (aks.getAsyncKeyState(keys.VK_END)) stop = true;
     }
 
-    // process.exit(1);
-}
-
-execute();
+    process.exit(1);
+    
+})();
