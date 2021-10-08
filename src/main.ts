@@ -9,26 +9,42 @@ import aks from 'asynckeystate';
 
 import { keys } from './utils/keys';
 
-import { getMem } from './functions/mem';
 import { canRun } from './utils/config';
+import { Global } from './functions/global';
+import { MODULES } from './utils/offsets';
 
-function execute() {
-    const { clientModule, engineModule } = getMem();
+const express = require('express')
+const app = express()
+const port = 3569
 
-    let stop = false;
+MODULES.g = new Global();
+MODULES.g.init();
 
-    while (!stop) {
-        if (canRun('aimbot')) Aimbot(engineModule);
-        if (canRun('glow')) Glow(clientModule);
-        if (canRun('triggerbot')) Triggerbot(clientModule);
-        if (canRun('bunnyhop')) BunnyHop(clientModule);
-        if (canRun('radar'))  Radar();
-        if (canRun('rcs')) RCS(engineModule);
+app.get('/instance', async (req, res) => {
+        
+    async function execute() {
 
-        if (aks.getAsyncKeyState(keys.VK_END)) stop = true;
+        let w = MODULES;
+        console.log("Started.");
+        let stop = false;
+        while (!stop) {
+            if (canRun('aimbot')) Aimbot(w.g.engineModule);
+            if (canRun('glow')) Glow(w.g.clientModule);
+            if (canRun('triggerbot')) Triggerbot(w.g.clientModule);
+            if (canRun('bunnyhop')) BunnyHop(w.g.clientModule);
+            if (canRun('radar'))  Radar();
+            if (canRun('rcs')) RCS(w.g.engineModule);
+
+            if (aks.getAsyncKeyState(keys.VK_END)) stop = true;
+        }
+
     }
 
-    // process.exit(1);
-}
+    await execute();
 
-execute();
+    res.send('<h1>Hello World!</h1>')
+})    
+  
+app.listen(port, () => {
+    console.log(`Running at http://localhost:${port}`)
+})

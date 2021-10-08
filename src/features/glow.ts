@@ -43,6 +43,6 @@ export default function Glow(client: IModule) {
             }
         }
     } catch (err) {
-        console.error('Glow Error');
+        console.error('Glow Error: ', err);
     }
 }

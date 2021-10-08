@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "asynckeystate": "^0.0.5",
+    "express": "^4.17.1",
     "iohook": "^0.6.6",
     "keypress": "^0.2.1",
     "memoryjs": "^3.4.0",

@@ -1,7 +1,8 @@
 const MODULES = {
     game: 'csgo.exe',
     client: 'client.dll',
-    engine: 'engine.dll'
+    engine: 'engine.dll',
+    g: null,
 };
 
 const NETVARS = {
