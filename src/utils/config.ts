@@ -8,11 +8,11 @@ function config(enabled: boolean, key?: keyof typeof keys) {
 const bones = { HEAD: 8, NECK: 7, CHEST: 6 };
 
 export const AIMBOT_AIM_AT = bones.HEAD;
-export const AIMBOT_FOV = 12;
+export const AIMBOT_FOV = 5;
 export const AIMBOT_AIM_SMOOTH = 77;
 
 export const configs = {
-    aimbot: config(false, "VK_XBUTTON2"),
+    aimbot: config(true, "VK_LBUTTON"),
     bunnyhop: config(false, "VK_SPACE"),
     triggerbot: config(true, "VK_XBUTTON2"),
     glow: config(true),
