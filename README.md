@@ -1,3 +1,7 @@
+# IMPORTANT
+
+**This project was developed solely for study purposes. You should not attempt to use it, as it will ban your CS:GO account. I have no intention of developing cheats for online games.**
+
 # CSGO.js
 
 [x] Glow
@@ -6,10 +10,6 @@
 [x] RCS
 [x] Radar
 [x] Aimbot
-
-# IMPORTANT
-
-**This project was developed solely for study purposes. You should not attempt to use it, as it will ban your CS:GO account. I have no intention of developing cheats for online games.**
 
 ## Resume
 
